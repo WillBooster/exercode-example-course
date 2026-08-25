@@ -28,7 +28,7 @@ await commandJudgePreset<
   AndroidTestRunResult
 >(import.meta.dirname, {
   limits: {
-    buildTimeoutSeconds: 10,
+    buildTimeoutSeconds: 30,
     maxOutputLength: 50_000,
   },
   runTimeoutSeconds: TIME_LIMIT_SECONDS,
