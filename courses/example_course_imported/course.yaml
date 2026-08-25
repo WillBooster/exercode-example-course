@@ -14,3 +14,6 @@ lectures:
   - id: kotlin_android
     name: Kotlin・Androidの採点例
     description: KotlinプログラムとAndroidユニットテストの採点例です。
+  - id: rails_react
+    name: Rails・Reactの採点例
+    description: Railsの統合テストとReactコンポーネントテストによる採点例です。
