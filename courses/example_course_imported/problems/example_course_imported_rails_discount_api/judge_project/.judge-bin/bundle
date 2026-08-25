@@ -1,0 +1,9 @@
+#!/bin/sh
+
+real_path=${PATH#*:}
+
+if [ "$1" = "install" ]; then
+  PATH="$real_path" BUNDLE_FROZEN=true exec bundle install --quiet
+fi
+
+PATH="$real_path" exec bundle "$@"

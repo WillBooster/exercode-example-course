@@ -4,3 +4,4 @@ kotlin 2.4.10
 gradle 9.4.1
 android-sdk 23.0
 node 24.19.0
+ruby 4.0.6
