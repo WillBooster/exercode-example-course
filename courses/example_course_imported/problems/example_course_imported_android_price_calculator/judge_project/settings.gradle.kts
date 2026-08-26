@@ -1,3 +1,7 @@
+if (System.getenv("GRADLE_RO_DEP_CACHE") != null) {
+  gradle.startParameter.isOffline = true
+}
+
 pluginManagement {
   repositories {
     google()
