@@ -43,9 +43,11 @@ await commandJudgePreset<{ id: string }, RailsTestRunResult>(import.meta.dirname
       projectDir: path.join(import.meta.dirname, 'judge_project'),
       projectFilePaths: PROJECT_FILE_PATHS,
       packageManager: 'ruby',
+      prepareDependencies: env.BUNDLE_RO_DEP_CACHE === undefined,
       command: ['bundle', 'exec', 'ruby', 'bin/rails', 'test', 'test/controllers/discounts_controller_test.rb'],
       env: {
         ...env,
+        BUNDLE_FROZEN: 'true',
         BUNDLE_PATH: env.BUNDLE_RO_DEP_CACHE ?? 'vendor/bundle',
         PATH: `.judge-bin${path.delimiter}${env.PATH ?? ''}`,
         RAILS_ENV: 'test',
