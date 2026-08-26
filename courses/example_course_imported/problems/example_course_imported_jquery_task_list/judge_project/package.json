@@ -1,0 +1,13 @@
+{
+  "name": "jquery-task-list-judge",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "jquery": "4.0.0",
+    "jsdom": "30.0.1",
+    "vitest": "4.1.11"
+  }
+}
