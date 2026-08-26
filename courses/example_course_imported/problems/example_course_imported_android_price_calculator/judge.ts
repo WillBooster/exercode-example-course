@@ -27,10 +27,7 @@ await commandJudgePreset<
   { id: string },
   AndroidTestRunResult
 >(import.meta.dirname, {
-  limits: {
-    buildTimeoutSeconds: 30,
-    maxOutputLength: 50_000,
-  },
+  buildSubmission: false,
   runTimeoutSeconds: TIME_LIMIT_SECONDS,
   readTestCases: () => Promise.resolve([{ id: 'android_unit_tests' }]),
   resolveInput: async ({ cwd }) => {
@@ -51,6 +48,7 @@ await commandJudgePreset<
       projectDir: path.join(import.meta.dirname, 'judge_project'),
       projectFilePaths: PROJECT_FILE_PATHS,
       packageManager: 'gradle',
+      prepareDependencies: false,
       command: ['gradle', '--offline', '--no-daemon', 'testDebugUnitTest'],
       env,
       timeLimitSeconds,
