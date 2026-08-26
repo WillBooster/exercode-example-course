@@ -29,7 +29,7 @@ await commandJudgePreset<{ id: string }, ReactTestRunResult>(import.meta.dirname
       projectFilePaths: PROJECT_FILE_PATHS,
       packageManager: 'bun',
       command: ['bun', 'run', 'test'],
-      env,
+      env: { ...env, NODE_ENV: 'test' },
       timeLimitSeconds,
       tempDirPrefix: 'exercode-react-',
     });
