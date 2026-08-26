@@ -5,7 +5,7 @@
     "": {
       "name": "exercode-example-course",
       "dependencies": {
-        "@exercode/problem-utils": "2.0.2",
+        "@exercode/problem-utils": "2.1.0",
         "puppeteer": "25.5.0",
       },
     },
@@ -27,7 +27,7 @@
 
     "@ai-sdk/xai": ["@ai-sdk/xai@4.0.39", "", { "dependencies": { "@ai-sdk/provider": "4.0.7", "@ai-sdk/provider-utils": "5.0.27" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-aKRm183J0Jnz93MFW+71wfls+aejuYKQCA63vxGYElIrnlv7ziAdT4uX+ZmQxJMAtjoszMuZKAPLd4AApKhOlg=="],
 
-    "@exercode/problem-utils": ["@exercode/problem-utils@2.0.2", "", { "dependencies": { "@ai-sdk/amazon-bedrock": "5.0.57", "@ai-sdk/google": "4.0.44", "@ai-sdk/openai": "4.0.42", "@ai-sdk/xai": "4.0.39", "ai": "7.0.66", "front-matter": "4.0.2", "zod": "4.4.3" }, "bin": { "exercode-problem": "bin/exercode-problem.mjs" } }, "sha512-rP5uuVLo+dG5h3o0ohzRtjpuDRYHBeU66kLBfwJheKDQxDNLR2JC1TT6x95GK4gzbusiKyUntsjjxN2dGXYrTw=="],
+    "@exercode/problem-utils": ["@exercode/problem-utils@2.1.0", "", { "dependencies": { "@ai-sdk/amazon-bedrock": "5.0.57", "@ai-sdk/google": "4.0.44", "@ai-sdk/openai": "4.0.42", "@ai-sdk/xai": "4.0.39", "ai": "7.0.66", "front-matter": "4.0.2", "zod": "4.4.3" }, "bin": { "exercode-problem": "bin/exercode-problem.mjs" } }, "sha512-8R/yFKp+53y6R5jTfXAd4uGA69qY/lXA417ayo+DLhO9QjazRJ0HjIHZzT7/XFZ40ic1LVB4RVyyOsmiR6EAjg=="],
 
     "@puppeteer/browsers": ["@puppeteer/browsers@3.1.0", "https://npm.flatt.tech/@puppeteer/browsers/-/browsers-3.1.0.tgz", { "dependencies": { "modern-tar": "^0.7.6", "yargs": "^18.0.0" }, "peerDependencies": { "proxy-agent": ">=8.0.1", "yauzl": "^2.10.0 || ^3.4.0" }, "optionalPeers": ["proxy-agent", "yauzl"], "bin": { "browsers": "lib/main-cli.js" } }, "sha512-RDLpio3fH/qrj5k4DVY6eyiN8tCS0Zovd/6jW//n605oeqkWcUjn+3k+9ZtZBnbwMpsu0F7xDIiKXvVmG5c5Bw=="],
 
