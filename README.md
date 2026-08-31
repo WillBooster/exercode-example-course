@@ -168,7 +168,7 @@ print(a + b)
 ```
 ````
 
-使用例は `courses/example_course_imported/a_plus_b/a_plus_b_executable_code.md` を参照してください。
+使用例は `courses/example_course_imported/a_plus_b/a_plus_b_z_executable_code.md` を参照してください。
 
 #### 選択肢・穴埋め・記述式問題
 
