@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@exercode/problem-utils": "2.4.0",
+    "@exercode/problem-utils": "2.4.1",
     "puppeteer": "25.5.0"
   }
 }
