@@ -1,8 +1,7 @@
+import fs from 'node:fs/promises';
 import path from 'node:path';
 
 import {
-  copyWithoutFollowingSymlinks,
-  createDirectoryWithoutFollowingSymlinks,
   DecisionCode,
   runCommandInTemporaryPackageManagerProject,
   type PackageManagerCommandRunResult,
@@ -35,8 +34,8 @@ await commandJudgePreset<
       cwd,
       'app/src/main/java/com/willbooster/example'
     );
-    await createDirectoryWithoutFollowingSymlinks(cwd, learnerSourceDirectory);
-    await copyWithoutFollowingSymlinks(
+    await fs.mkdir(learnerSourceDirectory, { recursive: true });
+    await fs.copyFile(
       path.join(cwd, 'PriceCalculator.kt'),
       path.join(learnerSourceDirectory, 'PriceCalculator.kt')
     );
