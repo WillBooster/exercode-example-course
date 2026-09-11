@@ -1,0 +1,5 @@
+{
+  "facts": [
+    "Browser authoring requires the Chromium revision for the pinned playwright-core, installed by the README command. The separate Judge Dockerfile provisions Playwright Chromium for course execution; the browser package does not download a browser during dependency installation."
+  ]
+}
