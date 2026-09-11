@@ -1,16 +1,16 @@
-import { DecisionCode, parseArgs, printTestCaseResult, startHttpServer } from '@exercode/problem-utils';
-import type { TestCaseResult } from '@exercode/problem-utils';
+import { DecisionCode } from '@exercode/problem-utils';
+import { browserJudgePreset, type BrowserJudgeTestCase } from '@exercode/problem-utils-browser';
 import assert from 'node:assert';
-import puppeteer from 'puppeteer';
-import type { Page } from 'puppeteer';
 
-const TEST_CASES: readonly [string, (page: Page) => Promise<Omit<TestCaseResult, 'testCaseId'>>][] = [
+const TEST_CASES: readonly BrowserJudgeTestCase[] = [
   [
     '01_h1',
     async (page) => {
       try {
-        const h1Handle = await page.locator('h1').waitHandle();
-        const h1Text = await h1Handle.evaluate((e) => e.textContent.trim());
+        const h1Text = await page
+          .locator('h1')
+          .first()
+          .evaluate((e) => e.textContent?.trim() ?? '');
         assert.strictEqual(h1Text, '自己紹介');
       } catch (error) {
         return {
@@ -26,8 +26,10 @@ const TEST_CASES: readonly [string, (page: Page) => Promise<Omit<TestCaseResult,
     '02_p',
     async (page) => {
       try {
-        const pHandle = await page.locator('p').waitHandle();
-        const pText = await pHandle.evaluate((e) => e.textContent.trim());
+        const pText = await page
+          .locator('p')
+          .first()
+          .evaluate((e) => e.textContent?.trim() ?? '');
         assert.strictEqual(pText, '私はWebの勉強をしています。');
       } catch (error) {
         return {
@@ -42,7 +44,7 @@ const TEST_CASES: readonly [string, (page: Page) => Promise<Omit<TestCaseResult,
   [
     '03_ul_li',
     async (page) => {
-      const liTexts = await page.$$eval('ul > li', (es) => es.map((e) => e.textContent?.trim() ?? ''));
+      const liTexts = await page.locator('ul > li').evaluateAll((es) => es.map((e) => e.textContent?.trim() ?? ''));
       const expected = ['HTML', 'CSS', 'JavaScript'];
 
       if (liTexts.length !== expected.length) {
@@ -66,21 +68,8 @@ const TEST_CASES: readonly [string, (page: Page) => Promise<Omit<TestCaseResult,
   ],
 ];
 
-const args = parseArgs(process.argv);
-await using server = startHttpServer(args.cwd);
-
-const browser = await puppeteer.launch({
-  args: process.env.CI || process.env.WB_DOCKER === '1' ? ['--no-sandbox', '--disable-setuid-sandbox'] : [],
+await browserJudgePreset({
+  testCases: TEST_CASES,
+  timeoutMs: 1000,
+  contextOptions: { viewport: { width: 800, height: 600 } },
 });
-const page = await browser.newPage();
-page.setDefaultTimeout(1000);
-
-await page.goto(server.url, { waitUntil: 'domcontentloaded' });
-
-for (const [testCaseId, test] of TEST_CASES) {
-  const result = await test(page);
-  printTestCaseResult({ testCaseId, ...result });
-  if (result.decisionCode !== DecisionCode.ACCEPTED) break;
-}
-
-await browser.close();
