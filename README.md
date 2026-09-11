@@ -372,7 +372,7 @@ bun install
 ブラウザ採点を実行する場合は、対応するChromiumをインストールします：
 
 ```bash
-bunx playwright-core@1.62.1 install chromium
+bun run exercode-browser install chromium
 ```
 
 HTML/CSS の構造チェックや、JavaScript のブラウザ API（DOM 操作、イベント、localStorage 等）を使う問題では、Playwright でブラウザを起動して判定します。
