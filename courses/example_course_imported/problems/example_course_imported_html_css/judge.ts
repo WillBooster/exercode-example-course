@@ -7,10 +7,7 @@ const TEST_CASES: readonly BrowserJudgeTestCase[] = [
     '01_h1',
     async (page) => {
       try {
-        const h1Text = await page
-          .locator('h1')
-          .first()
-          .evaluate((e) => e.textContent?.trim() ?? '');
+        const h1Text = await page.locator('h1').waitHandle().then((handle) => handle.evaluate((e) => e.textContent?.trim() ?? ''));
         assert.strictEqual(h1Text, '自己紹介');
       } catch (error) {
         return {
@@ -26,10 +23,7 @@ const TEST_CASES: readonly BrowserJudgeTestCase[] = [
     '02_p',
     async (page) => {
       try {
-        const pText = await page
-          .locator('p')
-          .first()
-          .evaluate((e) => e.textContent?.trim() ?? '');
+        const pText = await page.locator('p').waitHandle().then((handle) => handle.evaluate((e) => e.textContent?.trim() ?? ''));
         assert.strictEqual(pText, '私はWebの勉強をしています。');
       } catch (error) {
         return {
@@ -44,7 +38,7 @@ const TEST_CASES: readonly BrowserJudgeTestCase[] = [
   [
     '03_ul_li',
     async (page) => {
-      const liTexts = await page.locator('ul > li').evaluateAll((es) => es.map((e) => e.textContent?.trim() ?? ''));
+      const liTexts = await page.$$eval('ul > li', (es) => es.map((e) => e.textContent?.trim() ?? ''));
       const expected = ['HTML', 'CSS', 'JavaScript'];
 
       if (liTexts.length !== expected.length) {
@@ -71,5 +65,5 @@ const TEST_CASES: readonly BrowserJudgeTestCase[] = [
 await browserJudgePreset({
   testCases: TEST_CASES,
   timeoutMs: 1000,
-  contextOptions: { viewport: { width: 800, height: 600 } },
+  viewport: { width: 800, height: 600 },
 });

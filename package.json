@@ -4,6 +4,6 @@
   "type": "module",
   "dependencies": {
     "@exercode/problem-utils": "4.2.0",
-    "@exercode/problem-utils-browser": "1.2.0"
+    "@exercode/problem-utils-browser": "2.0.0"
   }
 }
