@@ -2,6 +2,7 @@ env = false
 telemetry = false
 
 [install]
+ignoreScripts = true
 exact = true
 globalStore = true
 linker = "isolated"
