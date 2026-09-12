@@ -4,7 +4,7 @@
   "type": "module",
   "dependencies": {
     "@exercode/problem-utils": "4.2.1",
-    "@exercode/problem-utils-browser": "2.0.0"
+    "@exercode/problem-utils-browser": "2.0.2"
   },
   "scripts": {
     "test": "bun run exercode-problem courses --only example_course_imported_html_css --only example_course_imported_js_browser",
