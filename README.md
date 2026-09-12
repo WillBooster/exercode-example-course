@@ -347,7 +347,7 @@ Exercode にアップロードする前に問題の不備を発見できるた�
 
 #### 前提条件
 
-このリポジトリでは、ランタイムのバージョンを`.tool-versions`で管理しています。
+このリポジトリでは、ランタイムのバージョンを`mise.toml`で管理しています。
 以下のツールがインストールされている必要があります。
 
 - [mise](https://mise.jdx.dev/)（ランタイムのバージョン管理）
@@ -356,7 +356,7 @@ Exercode にアップロードする前に問題の不備を発見できるた�
 
 #### セットアップ
 
-1. `.tool-versions`に記載されたランタイムをインストールします：
+1. `mise.toml`に記載されたランタイムをインストールします：
 
 ```bash
 mise install
@@ -373,14 +373,14 @@ bun install
 ブラウザ採点を実行する場合は、対応するChromiumをインストールします：
 
 ```bash
-bun run exercode-browser install chromium
+bun run exercode-browser browsers install chrome-headless-shell
 ```
 
-HTML/CSS の構造チェックや、JavaScript のブラウザ API（DOM 操作、イベント、localStorage 等）を使う問題では、Playwright でブラウザを起動して判定します。
+HTML/CSS の構造チェックや、JavaScript のブラウザ API（DOM 操作、イベント、localStorage 等）を使う問題では、Puppeteer でブラウザを起動して判定します。
 
 ##### HTML/CSS 問題
 
-Playwright でページを開き、DOM 構造やスタイルを検証するテストケースを TypeScript で記述します。
+Puppeteer でページを開き、DOM 構造やスタイルを検証するテストケースを TypeScript で記述します。
 
 **judge.ts の例（`problems/html_css_example/`）：**
 
@@ -396,8 +396,8 @@ const TEST_CASES: readonly BrowserJudgeTestCase[] = [
       try {
         const h1Text = await page
           .locator("h1")
-          .first()
-          .evaluate((e) => e.textContent?.trim() ?? "");
+          .waitHandle()
+          .then((element) => element.evaluate((e) => e.textContent?.trim() ?? ""));
         assert.strictEqual(h1Text, "自己紹介");
       } catch (error) {
         return {
@@ -415,7 +415,7 @@ const TEST_CASES: readonly BrowserJudgeTestCase[] = [
 await browserJudgePreset({
   testCases: TEST_CASES,
   timeoutMs: 1000,
-  contextOptions: { viewport: { width: 800, height: 600 } },
+  viewport: { width: 800, height: 600 },
 });
 ```
 
@@ -424,7 +424,7 @@ await browserJudgePreset({
 ```
 html_css_example/
 ├── problem.md
-├── judge.ts          ← Playwright でDOM構造を検証
+├── judge.ts          ← Puppeteer でDOM構造を検証
 └── model_answers/
     └── html/
         └── index.html
@@ -433,8 +433,8 @@ html_css_example/
 テストケースは `judge.ts` 内の `TEST_CASES` 配列に直接記述します（`.in` / `.out` ファイルは不要）。
 検証パターンの例：
 
-- タグの存在とテキスト内容: `page.locator('h1').first().evaluate(e => e.textContent)`
-- 属性の検証: `page.locator('img').evaluateAll(es => es.map(e => e.getAttribute('src')))`
+- タグの存在とテキスト内容: `page.locator('h1').waitHandle().then(element => element.evaluate(e => e.textContent))`
+- 属性の検証: `page.$$eval('img', es => es.map(e => e.getAttribute('src')))`
 - CSS スタイルの検証: `page.evaluate(() => getComputedStyle(el).color)`
 
 **実行方法：**
@@ -447,7 +447,7 @@ bun run judge.ts model_answers/html
 ##### JavaScript ブラウザ依存問題
 
 `test_cases/` の `.in` ファイルにブラウザ環境のセットアップコード（DOM 構築、`window.test` 定義等）を記述し、`.out` ファイルに `console.log` の期待出力を記述します。
-judge.ts は Playwright でブラウザを起動し、セットアップ → ユーザーコード実行 → 出力比較を行います。
+judge.ts は Puppeteer でブラウザを起動し、セットアップ → ユーザーコード実行 → 出力比較を行います。
 共通プリセットを呼び出します：
 
 ```ts
@@ -461,7 +461,7 @@ await javascriptDomJudgePreset(import.meta.dirname);
 ```
 javascript_browser_example/
 ├── problem.md
-├── judge.ts          ← Playwright でブラウザ上でJSを実行し出力を比較
+├── judge.ts          ← Puppeteer でブラウザ上でJSを実行し出力を比較
 ├── model_answers/
 │   └── javascript/
 │       └── main.mjs
