@@ -7,7 +7,7 @@ const TEST_CASES: readonly BrowserJudgeTestCase[] = [
     '01_h1',
     async (page) => {
       try {
-        const h1Text = await page.locator('h1').waitHandle().then((handle) => handle.evaluate((e) => e.textContent?.trim() ?? ''));
+        const h1Text = await (await page.locator('h1').waitHandle()).evaluate((e) => e.textContent?.trim() ?? '');
         assert.strictEqual(h1Text, '自己紹介');
       } catch (error) {
         return {
@@ -23,7 +23,7 @@ const TEST_CASES: readonly BrowserJudgeTestCase[] = [
     '02_p',
     async (page) => {
       try {
-        const pText = await page.locator('p').waitHandle().then((handle) => handle.evaluate((e) => e.textContent?.trim() ?? ''));
+        const pText = await (await page.locator('p').waitHandle()).evaluate((e) => e.textContent?.trim() ?? '');
         assert.strictEqual(pText, '私はWebの勉強をしています。');
       } catch (error) {
         return {
